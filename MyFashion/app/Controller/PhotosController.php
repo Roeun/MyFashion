@@ -12,69 +12,94 @@
  */
 class PhotosController extends AppController {
     public $helpers = array('Form','Html');
+    public $components = array('Session');
+    public $uses = array('Photo','Comment', 'Like');
 
     public function index () {
         $this->Session->write("uid", 1);
+        $photos = $this->Photo->find('all');
+        $this->set('photos', $photos);
     }
     
-    public function upload_photo () {
+    public function like_photo ($pid) {
+        $like["uid"] = 1;
+        $like["pid"] = $pid;
+        $like["likedate"] = date('Y-m-d H:i:s');
+        $this->Like->save($like);
+        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+    }
+
+    public function insert_comment () {
         if (!empty($this->data)) {
-            $photo["pname"] = $this->data["Photo"]["pname"]["name"];
-            $photo["pname_tmp"] = $this->data["Photo"]["pname"]["tmp_name"];
-            $photo["pdes"] = $this->data["Photo"]["pdes"];
-            $photo["postdate"] = date("Y-m-d");
-            $photo["uid"] = $this->Session->read("uid");
-            $photo["isenable"] = 1;
-            $photo["isdelete"] = 0;
-            if (!$this->upload_photo_fashion($photo)) {
-                $this->Session->setFlash ("Unable to save photo.");
+            $cmt["uid"] = 1;
+            $cmt["pid"] = $this->data["Photo"]["pid"];
+            $cmt["cmt"] = $this->data["Photo"]["cmt"];
+            $cmt["cmtdate"] = date('Y-m-d H:i:s');
+            $cmt["isenable"] = 1;
+            $cmt["isdelete"] = 0;
+            
+            if ($this->Comment->insert_comment($cmt)) {
+                $this->Session->setFlash("Comment posted.");
             } else {
-                $this->Session->setFlash ("Photo saved.");
+                $this->Session->setFlash("Unable to post comment.");
             } $this->redirect("index/");
         }
     }
 
-    public function upload_photo_fashion ($photo) {
-        if ($this->Photo->save($photo)) {
-            if (move_uploaded_file($photo["pname_tmp"], WWW_ROOT."Uploaded_Photos/".$photo["pname"])) {
-                return true;
-            } else return false;
-        } else return false;
+    public function upload () {
+        if (!empty($this->data)) {
+            $photo["pname"] = $this->data["Photo"]["pname"]["name"];
+            $photo["pname_tmp"] = $this->data["Photo"]["pname"]["tmp_name"];
+            $photo["pdes"] = $this->data["Photo"]["pdes"];
+            $photo["postdate"] = date("Y-m-d H:i:s");
+            $photo["uid"] = $this->Session->read("uid");
+            $photo["isenable"] = 1;
+            $photo["isdelete"] = 0;
+            if (!$this->Photo->upload_photo_fashion($photo)) {
+                $this->Session->setFlash ("Unable to save photo.");
+            } else {
+                $this->Session->setFlash ("Photo saved.");
+            } $this->redirect("upload/");
+        }
     }
     
-    public function abc () {
-        $this->disable_photo(1);
-        exit();
-    }
-
     public function disable_photo ($pid) {
         $photo["id"] = $pid;
         $photo["isenable"] = 0;
         $this->Photo->save($photo);
     }
 
-    public function delete_photo () {
-        
+    public function delete_photo ($pid) {
+        $this->Photo->delete($pid);
+    }
+
+    public function update_description ($pid, $pdes) {
+        $photo["id"] = $pid;
+        $photo["pdes"] = $pdes;
+        $this->Photo->save($photo);
     }
     
-    public function update_description () {
+    public function resize_photo ($photo) {
         
     }
-    
-    public function resize_photo () {
-        
+
+    public function top_photo ($top_amount) {
+        $top_photos = $this->Photo->find('all', array('limit'=>$top_amount, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
+        $this->set("top_photos", $top_photos);
     }
-    
-    public function top_ten_photo () {
-        
-    }
-    
+
     public function lastest_photo () {
-        
+        $lastest_photos = $this->Photo->find('all', array('limit'=>2, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
+        $this->set("lastest_photos", $lastest_photos);
     }
-    
+
     public function capture_photo () {
         
+    }
+
+    public function photo_list () {
+        $photos = $this->Photo->find('all', array('order'=>array('Photo.postdate DESC, Photo.id DESC')));
+        $this->set("photos", $photos);
     }
 }
 

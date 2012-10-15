@@ -17,16 +17,8 @@ class CommentsController extends AppController {
         
     }
 
-    public  function insert_comment () {
-        
-    }
-    
-    public function delete_comment () {
-        
-    }
-    
-    public function count_comment () {
-        
+    public function delete_comment ($cmt_id) {
+        $this->Comment->delete($cmt_id);
     }
 }
 
