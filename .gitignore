@@ -4,3 +4,6 @@ app/tmp/*
 app/config/database.php
 !empty
 /nbproject/private/
+MyFashion/app/Controller/LikesController.php
+
+MyFashion/app/Controller/LikesController.php
