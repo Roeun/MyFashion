@@ -16,6 +16,19 @@ class PhotosController extends AppController {
     public $uses = array('Photo','Comment', 'Like');
 
     public function index () {
+        if (!empty($this->data)) {
+            $cmt["uid"] = 1;
+            $cmt["pid"] = $this->data["Photo"]["pid"];
+            $cmt["cmt"] = $this->data["Photo"]["cmt"];
+            $cmt["cmtdate"] = date('Y-m-d H:i:s');
+
+            if ($this->Comment->insert_comment($cmt)) {
+                $this->Session->setFlash("Comment posted.");
+            } else {
+                $this->Session->setFlash("Unable to post comment.");
+            }
+        }
+        
         $this->Session->write("uid", 1);
         $photos = $this->Photo->find('all');
         $this->set('photos', $photos);
@@ -27,23 +40,6 @@ class PhotosController extends AppController {
         $like["likedate"] = date('Y-m-d H:i:s');
         $this->Like->save($like);
         $this->redirect(array("controller"=>"photos", "action"=>"index"));
-    }
-
-    public function insert_comment () {
-        if (!empty($this->data)) {
-            $cmt["uid"] = 1;
-            $cmt["pid"] = $this->data["Photo"]["pid"];
-            $cmt["cmt"] = $this->data["Photo"]["cmt"];
-            $cmt["cmtdate"] = date('Y-m-d H:i:s');
-            $cmt["isenable"] = 1;
-            $cmt["isdelete"] = 0;
-            
-            if ($this->Comment->insert_comment($cmt)) {
-                $this->Session->setFlash("Comment posted.");
-            } else {
-                $this->Session->setFlash("Unable to post comment.");
-            } $this->redirect("index/");
-        }
     }
 
     public function upload () {
@@ -83,13 +79,15 @@ class PhotosController extends AppController {
         
     }
 
-    public function top_photo ($top_amount) {
-        $top_photos = $this->Photo->find('all', array('limit'=>$top_amount, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
-        $this->set("top_photos", $top_photos);
+    public function top_photo ($top_photo_amount) {
+        $this->set("top_photos", $this->Photo->get_top_photo($top_photo_amount));
+
+//        $top_photos = $this->Photo->find('all', array('limit'=>$top_photo_amount, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
+//        $this->set("top_photos", $top_photos);
     }
 
-    public function lastest_photo () {
-        $lastest_photos = $this->Photo->find('all', array('limit'=>2, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
+    public function lastest_photo ($photo_amount) {
+        $lastest_photos = $this->Photo->find('all', array('limit'=>$photo_amount, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
         $this->set("lastest_photos", $lastest_photos);
     }
 

@@ -19,22 +19,22 @@ class Comment extends AppModel {
             )
         )
     );
-    
+
     public $belongTo = array(
         'Photo'=>array(
             'className'=>'Photo',
             'foreignKey'=>'pid'
         )
     );
-    
+
     public function insert_comment ($cmt_object) {
-        if ($this->Comment->Save($cmt_object)) {
+        if ($this->Save($cmt_object)) {
             return true;
         } else return false;
     }
     
     public function count_comment ($pid) {
-        return $this->Comment->find('ocunt', array('conditions'=>array('Comment.pid'=>$pid)));
+        return $this->Comment->find('count', array('conditions'=>array('Comment.pid'=>$pid)));
     }
 }
 
