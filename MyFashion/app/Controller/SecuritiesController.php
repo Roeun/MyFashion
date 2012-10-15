@@ -30,8 +30,8 @@ class SecuritiesController extends AppController {
         return $data;
     }
     
-    function sql_injection_output($data) {
-        return $data;
+    function sql_injection_output($string) {
+        return $string;
     }
     
     
