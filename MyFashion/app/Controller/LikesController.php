@@ -8,23 +8,30 @@
 
 App::uses('AppController', 'Controller');
 
-class LiksController extends AppController {
+class LikesController extends AppController {
 
 	public $name = 'Likes';
         
         
         /////////////////////  function like photo /////////
         public function like($user_id, $photo_id){
-            $status = false;
-            
-            return $status;
+            $arr_data = array (
+                'uid'=>$user_id,
+                'pid'=>$photo_id,
+                'likedate'=>date('Y/m/d H:i:s', time())
+            );
+            if ($this->Like->save($arr_data)) {
+                return true;
+            }
+            return false;
         }
 
         //////////////////// function unlike photo delete one record ///////// 
         public function unlike($like_id){
-            $status = false;
-            
-            return $status;
+            if ($this->Like->delete($like_id)) {
+                return true;
+            }
+            return false;
         }
 
         ///////// function count like will be count all number of likes on each photo /////////
