@@ -10,14 +10,19 @@ App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
 
-	public $name = 'Users';
+        public $helpers = array('Html','Form');
+        public $uses = array('User');
         
         
         /////////////////// function used to create an account for use website ///////
-        public function register($username, $password, $dob, $gender, $phone =''){
+        public function register(){
             $status = false;
             
-            return $status;
+            //AppController::checkAdminSession();
+            $title_for_layout = 'Create an Account';
+            $this->set(compact('title_for_layout'));
+                    
+            //return $status;
         }
         
         
