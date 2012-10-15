@@ -437,7 +437,7 @@ p.error,
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffcc00), to(#E6B800));
 	background-image: -webkit-linear-gradient(top, #ffcc00, #E6B800);
 	background-image: -o-linear-gradient(top, #ffcc00, #E6B800);
-	background-image: linear-gradient(top, #ffcc00, #E6B800);
+	background-image: linear-gradient(top, #ffcc00, #E6B800); 
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	margin-bottom: 18px;
@@ -458,7 +458,7 @@ p.error,
 .error-message {
 	clear: both;
 	color: #fff;
-	background: #c43c35;
+	/*background: green;
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	background-repeat: repeat-x;
 	background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
@@ -467,7 +467,8 @@ p.error,
 	background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
 	background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
 	background-image: linear-gradient(top, #ee5f5b, #c43c35);
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);*/
+        background: pink;
 }
 .success {
 	clear: both;
@@ -767,16 +768,23 @@ pre {
     margin:50px 40px 40px 40px;
     
 }
-#inner_right_home{
+.inner_right_home{
     border:1px solid #ddd;
-    padding:10px;
-    float: right;
+    padding:20px;
     text-align: left !important;
+    width:600px;
 }
 #home_holder{
     display: inline-block;
 }
 
 .width_dob{
-    width:90px !important;
+    width:181px !important;
+}
+#home_holder input{
+    width:540px !important;
+    margin:0px 0px -10px 0px !important;
+}
+#home_holder .btn{
+    width:120px !important;
 }

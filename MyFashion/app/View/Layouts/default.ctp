@@ -28,7 +28,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                     <center>
                         <div id="inner_top">
                             <div id="top_left">
-                                My Fashion
+                                <h4><?php echo $this->Html->link('My Fashion',array('controller' => 'pages', 'action' => 'display'));?></h4>
                             </div>
                             <div id="top_right">
                                 <?php echo $this->Html->link('Login',array('controller' => 'users', 'action' => 'login'));?> | 
@@ -40,9 +40,11 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		<div id="content">
                     <center>
                         <div class="inner">
-			<?php echo $this->Session->flash(); ?>
+                            <center>
+                                <?php echo $this->Session->flash(); ?>
 
-			<?php echo $this->fetch('content'); ?>
+                                <?php echo $this->fetch('content'); ?>
+                            </center>
                         </div>
                     </center>
 		</div>
