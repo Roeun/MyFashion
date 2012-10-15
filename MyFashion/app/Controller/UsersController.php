@@ -16,13 +16,28 @@ class UsersController extends AppController {
         
         /////////////////// function used to create an account for use website ///////
         public function register(){
-            $status = false;
             
             //AppController::checkAdminSession();
             $title_for_layout = 'Create an Account';
             $this->set(compact('title_for_layout'));
                     
-            //return $status;
+            // if the form was submitted
+            if(!empty($this->data)) {     
+                $my_date = date('Y-m-d');
+                $arr = array (
+                    'uname' => $this->request->data('User.uname'),
+                    'pwd' => $this->request->data('User.pwd'),
+                    'email' => $this->request->data('User.email'),
+                    'gender' => $this->request->data('User.gender'),
+                    'phone' => $this->request->data('User.phone'),
+                    'dob' => $my_date
+                ); 
+
+                if($this->User->save($arr)){
+                    $this->Session->setFlash('User has been saved.');
+                    $this->redirect(array('action' => 'upload_photo_profile'));
+                }
+            }
         }
         
         
