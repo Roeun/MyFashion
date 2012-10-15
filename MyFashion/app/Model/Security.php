@@ -55,6 +55,13 @@ class Security extends AppModel {
     }
     
     function user_limitation($email, $ip) {
+        static $limit;
+        if ($_SESSION['ip']==$ip) {
+            $limit++;
+            if ($limit>3) {
+                return true;
+            }
+        }
         return false;
     }
     

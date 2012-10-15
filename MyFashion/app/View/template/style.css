@@ -68,4 +68,6 @@ TD {
 }
 .photo {
     width: 150px;
+    padding: 2px;
+    border:#9999ff thin dotted;
 }
