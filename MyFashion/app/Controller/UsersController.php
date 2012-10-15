@@ -30,7 +30,8 @@ class UsersController extends AppController {
                     'email' => $this->request->data('User.email'),
                     'gender' => $this->request->data('User.gender'),
                     'phone' => $this->request->data('User.phone'),
-                    'dob' => $my_date
+                    'dob' => $this->request->data('User.dob'),
+                    'rdate' => $my_date
                 ); 
 
                 if($this->User->save($arr)){
@@ -42,42 +43,58 @@ class UsersController extends AppController {
         
         
         //////////////// Users login to use the system or Webservice
-        public function login($email, $password) {
-            $status = false;
-            
-            return $status;
+        public function login() {
+            $title_for_layout = 'Welcome to MyFashion';
+                    $this->set(compact('title_for_layout'));
+                    
+                    // if the form was submitted
+                    if(!empty($this->data)) {
+                               // find the user in the database
+                               $dbuser = $this->User->findByEmail($this->data['User']['email']);
+                               // if found and passwords match
+                               if(!empty($dbuser) && ($dbuser['User']['pwd'] == $this->data['User']['pwd'])) {
+                                       // write the username to a session
+                                       $this->Session->write('User', $dbuser);
+                                       // save the login time
+                                       $dbuser['User']['last_login'] = date("Y-m-d H:i:s");
+                                       $this->User->save($dbuser);
+                                       // redirect the user
+                                       //$this->Session->setFlash('You have successfully logged in.');
+                                       $this->redirect('../index.php');
+                               } else {
+                                       $this->Session->setFlash('Email and password does not match!');
+                                       $this->set('error', 'Either your username or password is incorrect.');
+                               }
+                       }
+
         }
         
         ///////////// function reset password when user forgot password ///////////
-        public function reset_password($email){
+        public function reset_password(){
             $status = false;
             
             return $status;
         }
         
         //////////////////  function update profile information ///////////////////
-        public function update_profile($username, $password, $dob, $gender, $phone=''){
-            $status = false;
+        public function update_profile(){
             
-            return $status;
         }
         
         ///////////  Function change password of user /////////
-        public function change_password($password){
+        public function change_password(){
             $status = false;
             
             return $status;
         }
         
         ///////////// function upload your profile picture ///////////////////////
-        public function upload_photo_profile($tmp_image_name){
-            $status = false;
+        public function upload_photo_profile(){
             
-            return $status;
         }
         
         ////////////////  function disactivate account /////////////
-        public function disactivate_account($user_id){
+        public function disactivate_account(){
             $status = false;
             
             return $status;
