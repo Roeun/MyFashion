@@ -29,11 +29,12 @@ class PhotosController extends AppController {
                 $this->Session->setFlash("Unable to post comment.");
             }
         }
-        $photos = $this->Photo->find('all', array("conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$myUser['User']['id']." OR Photo.isenable=1)")));
+        $photos = $this->Photo->find('all', array("conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$myUser['User']['id']." OR Photo.isenable=1)"), 'order'=>array("Photo.postdate DESC")));
         $this->set('photos', $photos);
     }
 
     public function like_photo ($pid) {
+        $myUser = $this->Session->read('User');
         $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$myUser['User']['id'], 'Like.pid'=>$pid)));
         if (count($old_like) > 0) {
             $like["id"] = $old_like[0]["Like"]["id"];
@@ -47,6 +48,7 @@ class PhotosController extends AppController {
     }
     
     public function unlike_photo ($pid) {
+        $myUser = $this->Session->read('User');
         $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$myUser['User']['id'], 'Like.pid'=>$pid)));
         $like["id"] = $old_like[0]["Like"]["id"];
         $like["uid"] = $myUser['User']['id'];
@@ -58,6 +60,7 @@ class PhotosController extends AppController {
 
     public function upload () {
         if (!empty($this->data)) {
+            $myUser = $this->Session->read('User');
             $photo["pname"] = $this->data["Photo"]["pname"]["name"];
             $photo["pname_tmp"] = $this->data["Photo"]["pname"]["tmp_name"];
             $photo["pdes"] = $this->data["Photo"]["pdes"];

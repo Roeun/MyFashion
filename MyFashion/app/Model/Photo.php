@@ -31,10 +31,10 @@ class Photo extends AppModel {
     
     public function upload_photo_fashion ($photo) {
         if ($this->save($photo)) {
-            if (move_uploaded_file($photo["pname_tmp"], WWW_ROOT."uploaded_photos/".$photo["pname"])) {
-                $imgObj = new resize(WWW_ROOT."uploaded_photos/".$photo["pname"]);
+            if (move_uploaded_file($photo["pname_tmp"], "/app/webroot/uploaded_photos/".$photo["pname"])) {
+                $imgObj = new resize("/app/webroot/uploaded_photos/".$photo["pname"]);
                 $imgObj->customResizeImage(200);
-                $imgObj->saveImage(WWW_ROOT."uploaded_photos/thumbnail/thumbnail_".$photo["pname"], 100);
+                $imgObj->saveImage("/app/webroot/uploaded_photos/thumbnail/thumbnail_".$photo["pname"], 100);
                 return true;
             } else return false;
         } else return false;
