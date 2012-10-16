@@ -29,29 +29,28 @@ class PhotosController extends AppController {
                 $this->Session->setFlash("Unable to post comment.");
             }
         }
-
         $this->Session->write("uid", 1);
         $photos = $this->Photo->find('all', array("conditions"=>array("isdelete=0 AND (uid=".$this->Session->read("uid")." OR isenable=1)")));
         $this->set('photos', $photos);
     }
     
-    public function like_photo ($pid, $uid) {
-        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$uid, 'Like.pid'=>$pid)));
+    public function like_photo ($pid) {
+        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$this->Session->read("uid"), 'Like.pid'=>$pid)));
         if ($old_like[0]["Like"]["uid"] != "") {
             $like["id"] = $old_like[0]["Like"]["id"];
             $like["status"] = 1;
         }
-        $like["uid"] = $uid;
+        $like["uid"] = $this->Session->read("uid");
         $like["pid"] = $pid;
         $like["likedate"] = date('Y-m-d H:i:s');
         $this->Like->save($like);
         $this->redirect(array("controller"=>"photos", "action"=>"index"));
     }
     
-    public function unlike_photo ($pid, $uid) {
-        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$uid, 'Like.pid'=>$pid)));
+    public function unlike_photo ($pid) {
+        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$this->Session->read("uid"), 'Like.pid'=>$pid)));
         $like["id"] = $old_like[0]["Like"]["id"];
-        $like["uid"] = $uid;
+        $like["uid"] = $this->Session->read("uid");
         $like["pid"] = $pid;
         $like["status"] = 0;
         $this->Like->Save($like);

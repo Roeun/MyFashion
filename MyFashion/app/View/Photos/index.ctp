@@ -23,15 +23,15 @@ View Top <select onchange="viewTopPhoto(this.value)"><option value="">---</optio
                                 $like_uid[] = $like["uid"];
                             }
                         }
-                        if (in_array(1, $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $photo["Photo"]["id"], 1))."&nbsp;:&nbsp;".$count_like.", Comments : ".count($photo["Comment"])."]";
-                        else echo $this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $photo["Photo"]["id"], 1))."&nbsp;:&nbsp;".$count_like.", Comments : ".count($photo["Comment"])."]";
-                        
+                        if (in_array($this->Session->read("uid"), $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $photo["Photo"]["id"]))."&nbsp;:&nbsp;".$count_like.", Comments : ".count($photo["Comment"])."]";
+                        else echo $this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $photo["Photo"]["id"]))."&nbsp;:&nbsp;".$count_like.", Comments : ".count($photo["Comment"])."]";
+
                         if ($photo["Photo"]["isdelete"]==0) {
-                            echo "<br/>".$this->Html->link("Delete Photo", array("controller"=>"photos", "action"=>"delete_photo", $photo["Photo"]["id"]))."&nbsp;&nbsp;:&nbsp;&nbsp;";
+                            echo "<br/>".$this->Html->link("Delete this Photo", array("controller"=>"photos", "action"=>"delete_photo", $photo["Photo"]["id"]))."&nbsp;&nbsp;:&nbsp;&nbsp;";
                             if ($photo["Photo"]["isenable"]==0) {
-                                echo $this->Html->link("Enable Photo", array("controller"=>"photos", "action"=>"enable_photo", $photo["Photo"]["id"]));
+                                echo $this->Html->link("Enable this Photo", array("controller"=>"photos", "action"=>"enable_photo", $photo["Photo"]["id"]));
                             } else {
-                                echo $this->Html->link("Disable Photo", array("controller"=>"photos", "action"=>"disable_photo", $photo["Photo"]["id"]));
+                                echo $this->Html->link("Disable this Photo", array("controller"=>"photos", "action"=>"disable_photo", $photo["Photo"]["id"]));
                             }
                         }
                     ?>
@@ -66,4 +66,4 @@ View Top <select onchange="viewTopPhoto(this.value)"><option value="">---</optio
             echo $this->Form->end("Post");
         ?>
     </div>
-<?php } ?>
+<?php } print_r($photos); ?>

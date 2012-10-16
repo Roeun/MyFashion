@@ -11,6 +11,13 @@
  * @author apple
  */
 class Photo extends AppModel {
+    public $belongTo = array(
+        "User"=>array(
+            'className'=>"User",
+            'foreignKey'=>'uid'
+        )
+    );
+            
     public $hasMany = array(
         'Comment'=>array(
             'className'=>'Comment',

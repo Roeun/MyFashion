@@ -24,6 +24,10 @@ class Comment extends AppModel {
         'Photo'=>array(
             'className'=>'Photo',
             'foreignKey'=>'pid'
+        ),
+        'User'=>array(
+            'className'=>'User',
+            'foreignKey'=>'uid'
         )
     );
 
