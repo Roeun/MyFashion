@@ -13,12 +13,12 @@
 include 'resize_class.php';
 class PhotosController extends AppController {
     public $helpers = array('Form','Html');
-    public $components = array('Session');
     public $uses = array('Photo','Comment', 'Like');
 
     public function index ($pid = null, $act = null) {
+        $myUser = $this->Session->read('User');
         if (!empty($this->data)) {
-            $cmt["uid"] = $this->Session->read("uid");
+            $cmt["uid"] = $myUser['User']['id'];
             $cmt["pid"] = $this->data["Photo"]["pid"];
             $cmt["cmt"] = $this->data["Photo"]["cmt"];
             $cmt["cmtdate"] = date('Y-m-d H:i:s');
@@ -29,18 +29,17 @@ class PhotosController extends AppController {
                 $this->Session->setFlash("Unable to post comment.");
             }
         }
-        $this->Session->write("uid", 2);
-        $photos = $this->Photo->find('all', array("order"=>array("Photo.postdate DESC"), "conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$this->Session->read("uid")." OR Photo.isenable=1)")));
+        $photos = $this->Photo->find('all', array("conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$myUser['User']['id']." OR Photo.isenable=1)")));
         $this->set('photos', $photos);
     }
 
     public function like_photo ($pid) {
-        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$this->Session->read("uid"), 'Like.pid'=>$pid)));
+        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$myUser['User']['id'], 'Like.pid'=>$pid)));
         if (count($old_like) > 0) {
             $like["id"] = $old_like[0]["Like"]["id"];
             $like["status"] = 1;
         }
-        $like["uid"] = $this->Session->read("uid");
+        $like["uid"] = $myUser['User']['id'];
         $like["pid"] = $pid;
         $like["likedate"] = date('Y-m-d H:i:s');
         $this->Like->save($like);
@@ -48,9 +47,9 @@ class PhotosController extends AppController {
     }
     
     public function unlike_photo ($pid) {
-        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$this->Session->read("uid"), 'Like.pid'=>$pid)));
+        $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$myUser['User']['id'], 'Like.pid'=>$pid)));
         $like["id"] = $old_like[0]["Like"]["id"];
-        $like["uid"] = $this->Session->read("uid");
+        $like["uid"] = $myUser['User']['id'];
         $like["pid"] = $pid;
         $like["status"] = 0;
         $this->Like->Save($like);
@@ -63,7 +62,7 @@ class PhotosController extends AppController {
             $photo["pname_tmp"] = $this->data["Photo"]["pname"]["tmp_name"];
             $photo["pdes"] = $this->data["Photo"]["pdes"];
             $photo["postdate"] = date("Y-m-d H:i:s");
-            $photo["uid"] = $this->Session->read("uid");
+            $photo["uid"] = $myUser['User']['id'];
             $photo["isenable"] = 1;
             $photo["isdelete"] = 0;
             if (!$this->Photo->upload_photo_fashion($photo)) {

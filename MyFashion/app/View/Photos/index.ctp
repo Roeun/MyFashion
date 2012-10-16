@@ -11,14 +11,14 @@ View Top <select onchange="viewTopPhoto(this.value)"><option value="">---</optio
 <?php foreach ($photos as $photo) { ?>
     <div style="border:1px;">
         <table>
-            <?php if ($photo["Photo"]["isdelete"]==0 && ($photo["Photo"]["isenable"]==1 || $photo["Photo"]["uid"]==$this->Session->read("uid"))) { ?>
+            <?php if ($photo["Photo"]["isdelete"]==0 && ($photo["Photo"]["isenable"]==1 || $photo["Photo"]["uid"]==$this->Session->read("User.id"))) { ?>
                 <tr>
                     <td colspan="2">
                         <?php
                             $comment_count = 0;
                             $comment_id = array();
                             foreach ($photo["Comment"] as $comment) {
-                                if ($comment["isdelete"]==0 && ($comment["isenable"]==1 || $comment["uid"]==$this->Session->read("uid"))) {
+                                if ($comment["isdelete"]==0 && ($comment["isenable"]==1 || $comment["uid"]==$this->Session->read("User.id"))) {
                                     $comment_count++;
                                     $comment_id[] = $comment["id"];
                                 }
@@ -32,10 +32,10 @@ View Top <select onchange="viewTopPhoto(this.value)"><option value="">---</optio
                                     $like_uid[] = $like["uid"];
                                 }
                             }
-                            if (in_array($this->Session->read("uid"), $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $photo["Photo"]["id"]))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
+                            if (in_array($this->Session->read("User.id"), $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $photo["Photo"]["id"]))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
                             else echo $this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $photo["Photo"]["id"]))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
 
-                            if ($photo["Photo"]["isdelete"]==0 && $this->Session->read("uid")==$photo["Photo"]["uid"]) {
+                            if ($photo["Photo"]["isdelete"]==0 && $this->Session->read("User.id")==$photo["Photo"]["uid"]) {
                                 echo "<br/>".$this->Html->link("Delete this Photo", array("controller"=>"photos", "action"=>"delete_photo", $photo["Photo"]["id"]))."&nbsp;&nbsp;:&nbsp;&nbsp;";
                                 if ($photo["Photo"]["isenable"]==0) {
                                     echo $this->Html->link("Enable this Photo", array("controller"=>"photos", "action"=>"enable_photo", $photo["Photo"]["id"]));
@@ -49,12 +49,12 @@ View Top <select onchange="viewTopPhoto(this.value)"><option value="">---</optio
             <?php } ?>
             <tr>
                 <td colspan="2">
-                    <img height="150px;" alt="<?php echo $photo["Photo"]["pname"]; ?>" src="<?php echo WWW_ROOT.'uploaded_photos/'.$photo["Photo"]["pname"]; ?>" />
+                    <img height="150px;" alt="<?php echo "thumbnail_".$photo["Photo"]["pname"]; ?>" src="<?php echo '/app/webroot/uploaded_photos/thumbnail/thumbnail_'.$photo["Photo"]["pname"]; ?>" />
                     <?php
-                        if ($this->Session->read("uid") == $photo["Photo"]["uid"]) {
-                            echo "edit";
-                        }
                         echo "<br/>".$photo["Photo"]["pdes"];
+                        if ($this->Session->read("User.id") == $photo["Photo"]["uid"]) {
+                            echo "&nbsp;:&nbsp;edit";
+                        }
                     ?>
                 </td>
             </tr>
@@ -68,7 +68,7 @@ View Top <select onchange="viewTopPhoto(this.value)"><option value="">---</optio
                     </td>
                     <td>
                         <?php
-                            if ($comment["isdelete"]==0 && $this->Session->read("uid")==$comment["uid"]) {
+                            if ($comment["isdelete"]==0 && $this->Session->read("User.id")==$comment["uid"]) {
                                 echo "<br/>".$this->Html->link("X", array("controller"=>"comments", "action"=>"delete_comment", $comment["id"]))."&nbsp;&nbsp;:&nbsp;&nbsp;";
                                 if ($comment["isenable"]==0) {
                                     echo $this->Html->link("Enable this Comment", array("controller"=>"comments", "action"=>"enable_comment", $comment["id"]));

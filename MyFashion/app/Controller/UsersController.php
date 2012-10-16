@@ -76,7 +76,7 @@ class UsersController extends AppController {
                                       //  $this->User->save($userIp);
                                        // redirect the user
                                        //$this->Session->setFlash('You have successfully logged in.');
-                                       $this->redirect('../index.php');
+                                       $this->redirect('/photos/index');
                                } else {
                                        $this->Session->setFlash('Email and password does not match!');
                                        $this->set('error', 'Either your username or password is incorrect.');
