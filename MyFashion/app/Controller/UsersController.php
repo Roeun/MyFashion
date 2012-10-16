@@ -51,13 +51,16 @@ class UsersController extends AppController {
                     if(!empty($this->data)) {
                                // find the user in the database
                                $dbuser = $this->User->findByEmail($this->data['User']['email']);
+                               $userIp = $this->request->clientIp();
                                // if found and passwords match
                                if(!empty($dbuser) && ($dbuser['User']['pwd'] == $this->data['User']['pwd'])) {
                                        // write the username to a session
                                        $this->Session->write('User', $dbuser);
+                                       $this->Session->write('User', $userIp);
                                        // save the login time
                                        $dbuser['User']['last_login'] = date("Y-m-d H:i:s");
                                        $this->User->save($dbuser);
+                                        $this->User->save($userIp);
                                        // redirect the user
                                        //$this->Session->setFlash('You have successfully logged in.');
                                        $this->redirect('../index.php');
