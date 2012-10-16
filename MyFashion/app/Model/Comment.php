@@ -33,9 +33,9 @@ class Comment extends AppModel {
         } else return false;
     }
     
-    public function count_comment ($pid) {
-        return $this->Comment->find('count', array('conditions'=>array('Comment.pid'=>$pid)));
-    }
+//    public function count_comment ($pid) {
+//        return $this->Comment->find('count', array('conditions'=>array('Comment.pid'=>$pid)));
+//    }
 }
 
 ?>
