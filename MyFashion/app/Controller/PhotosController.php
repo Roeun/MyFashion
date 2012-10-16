@@ -58,7 +58,7 @@ class PhotosController extends AppController {
             } $this->redirect("upload/");
         }
     }
-    
+
     public function disable_photo ($pid) {
         $photo["id"] = $pid;
         $photo["isenable"] = 0;
@@ -80,10 +80,10 @@ class PhotosController extends AppController {
     }
 
     public function top_photo ($top_photo_amount) {
-        $this->set("top_photos", $this->Photo->get_top_photo($top_photo_amount));
+//        $this->set("top_photos", $this->Photo->get_top_photo($top_photo_amount));
 
-//        $top_photos = $this->Photo->find('all', array('limit'=>$top_photo_amount, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
-//        $this->set("top_photos", $top_photos);
+        $top_photos = $this->Photo->find('all', array('limit'=>$top_photo_amount, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
+        $this->set("top_photos", $top_photos);
     }
 
     public function lastest_photo ($photo_amount) {
