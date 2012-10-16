@@ -32,4 +32,25 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+    public function myCheckSession(){
+        if(!$this->Session->check('User')){
+             $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }
+    }
+    
+    public function checkSession(){
+        if(!$this->Session->check('User')){
+             return false;
+        }else{
+            return true;
+        }
+    }
+    
+    public function beforeFilter(){
+        if(!$this->Session->check('User')){
+            $this->lyout = 'default';
+        }else{
+            $this->layout = 'myDefault';
+        }
+    }
 }
