@@ -18,17 +18,15 @@ class PhotosController extends AppController {
 
     public function index ($pid = null, $act = null) {
         if (!empty($this->data)) {
-            if (!empty($this->data["cmt"])) {
-                $cmt["uid"] = 1;
-                $cmt["pid"] = $this->data["Photo"]["pid"];
-                $cmt["cmt"] = $this->data["Photo"]["cmt"];
-                $cmt["cmtdate"] = date('Y-m-d H:i:s');
+            $cmt["uid"] = 1;
+            $cmt["pid"] = $this->data["Photo"]["pid"];
+            $cmt["cmt"] = $this->data["Photo"]["cmt"];
+            $cmt["cmtdate"] = date('Y-m-d H:i:s');
 
-                if ($this->Comment->insert_comment($cmt)) {
-                    $this->Session->setFlash("Comment posted.");
-                } else {
-                    $this->Session->setFlash("Unable to post comment.");
-                }
+            if ($this->Comment->insert_comment($cmt)) {
+                $this->Session->setFlash("Comment posted.");
+            } else {
+                $this->Session->setFlash("Unable to post comment.");
             }
         }
 
