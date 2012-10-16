@@ -15,11 +15,46 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		
                 echo $this->Html->css('cake.generic');
                 echo $this->Html->css('bootstrap');
+                echo $this->Html->css('jquery-ui-1.8.4.custom');
+                echo $this->Html->css('jquery.fancybox-1.3.4');
+                
+                echo $this->Html->script('jquery-1.4.2.min.js');
+                echo $this->Html->script('jquery.fancybox-1.3.4.pack.js');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+    <script type="text/javascript">
+    		$(document).ready(function() {
+			
+			$("#popup").fancybox({
+				'titlePosition'		: 'outside',
+				'overlayColor'		: '#000',
+				'overlayOpacity'	: 0.9
+			});
+
+			
+			$("#iframe_register").fancybox({
+				'width'				: '55%',
+				'height'			: '98%',
+				'autoScale'			: false,
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'type'				: 'iframe'
+			});
+                        $("#iframe_login").fancybox({
+				'width'				: '55%',
+				'height'			: '65%',
+				'autoScale'			: false,
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'type'				: 'iframe'
+			});
+                        
+		});
+	
+    </script>
 </head>
 <body>
 	<div id="container">
@@ -30,8 +65,11 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                                 <h4><?php echo $this->Html->link('My Fashion',array('controller' => 'pages', 'action' => 'display'));?></h4>
                             </div>
                             <div id="top_right">
-                                <?php echo $this->Html->link('Login',array('controller' => 'users', 'action' => 'login'));?> | 
-                                <?php echo $this->Html->link('Register',array('controller' => 'users', 'action' => 'register'));?>
+                                <?php 
+                                    echo $this->Html->link('Login',array('controller' => 'users', 'action' => 'login'), array('id'=>'iframe_login')); 
+                                    echo " | "; 
+                                    echo $this->Html->link('Register',array('controller' => 'users', 'action' => 'register'), array('id'=>'iframe_register'));
+                                 ?>
                             </div>
                         </div>
                     </center>

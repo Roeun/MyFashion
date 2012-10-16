@@ -125,6 +125,17 @@ p {
     border-radius:              16px;
     margin-bottom:              10px;
 }
+.inner_popup{
+    width:600px;
+    background: #fff;
+    padding:20px;
+    text-align: left;
+    border:                     1px solid #DFDFDF;
+    -moz-border-radius:         16px;
+    -webkit-border-radius:      16px;
+    border-radius:              16px;
+    margin-bottom:              10px;
+}
 #footer {
 	clear: both;
 	padding: 6px 10px;
@@ -765,14 +776,13 @@ pre {
 #create_account_right{
     float:right;
     text-align:center;
-    margin:50px 40px 40px 40px;
+    margin:10px;
     
 }
 .inner_right_home{
     border:1px solid #ddd;
     padding:20px;
     text-align: left !important;
-    width:600px;
 }
 #home_holder{
     display: inline-block;
@@ -782,7 +792,7 @@ pre {
     width:181px !important;
 }
 #home_holder input{
-    width:540px !important;
+    width:400px !important;
     margin:0px 0px -10px 0px !important;
 }
 #home_holder .btn{

@@ -1,5 +1,4 @@
 <div id="home_holder">
-
     <div id="create_account_right">
          <h4>Login to your account</h4>
          <div class="inner_right_home">
