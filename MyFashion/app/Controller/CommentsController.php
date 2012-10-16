@@ -22,6 +22,20 @@ class CommentsController extends AppController {
         $this->Comment->save($cmt);
         $this->redirect(array("controller"=>"photos", "action"=>"index"));
     }
+    
+    public function disable_comment ($cmt_id) {
+        $cmt["id"] = $cmt_id;
+        $cmt["isenable"] = 0;
+        $this->Comment->save($cmt);
+        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+    }
+    
+    public function enable_comment ($cmt_id) {
+        $cmt["id"] = $cmt_id;
+        $cmt["isenable"] = 1;
+        $this->Comment->save($cmt);
+        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+    }
 }
 
 ?>

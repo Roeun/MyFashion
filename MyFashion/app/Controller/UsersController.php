@@ -10,7 +10,6 @@ App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
         public $helpers = array('Html','Form');
-        public $uses = array('User');
         
         
         /////////////////// function used to create an account for use website ///////

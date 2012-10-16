@@ -17,7 +17,7 @@ class Photo extends AppModel {
             'foreignKey'=>'uid'
         )
     );
-            
+    
     public $hasMany = array(
         'Comment'=>array(
             'className'=>'Comment',
@@ -39,7 +39,7 @@ class Photo extends AppModel {
             } else return false;
         } else return false;
     }
-    
+
     public function get_top_photo ($photo_amount)
     {
         $sql = "SELECT *,(SELECT COUNT(id) FROM likes l WHERE l.pid=p.id) AS likecount,(SELECT COUNT(id) FROM comments c WHERE c.pid=p.id) AS commentcount,
