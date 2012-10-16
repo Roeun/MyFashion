@@ -66,11 +66,11 @@ class Security extends AppModel {
     }
     
     function sql_injection_input($data) {
-        return $data;
+        return mysql_real_escape_string($data);
     }
     
     function sql_injection_output($data) {
-        return $data;
+        return htmlspecialchars($data);
     }
         
 }
