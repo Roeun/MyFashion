@@ -38,7 +38,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                       <ul class="menu">
                           <li><?php echo $this->Html->link('Where is your Fashion?',array('controller' => 'users', 'action' => 'register'));?></li>
                           <li><?php echo $this->Html->link('My Fashion',array('controller' => 'users', 'action' => 'register'));?></li>
-                          <li><?php echo $this->Html->link('Lastest Photo',array('controller' => 'users', 'action' => 'register'));?></li>
+                          <li><?php echo $this->Html->link('Lastest Photo',array('controller' => 'photos', 'action' => 'lastest_photo/20'));?></li>
                           <li><?php echo $this->Html->link('Top 10 Photo',array('controller' => 'users', 'action' => 'register'));?></li>
                           <li><?php echo $this->Html->link('Profile Photo',array('controller' => 'users', 'action' => 'register'));?></li>
                           <li><?php echo $this->Html->link('My Profile',array('controller' => 'users', 'action' => 'my_profile'));?></li>
