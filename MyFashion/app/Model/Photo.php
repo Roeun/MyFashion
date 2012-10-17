@@ -11,14 +11,6 @@
  * @author apple
  */
 class Photo extends AppModel {
-
-    public $belongsTo = array(
-        'User'=>array(
-            'className'=>'User',
-            'foreignKey'=>'uid'
-        )
-    );
-    
     public $hasMany = array(
         'Comment'=>array(
             'className'=>'Comment',
@@ -29,18 +21,18 @@ class Photo extends AppModel {
             'foreignKey'=>'pid'
         )
     );
-
+    
     public function upload_photo_fashion ($photo) {
         if ($this->save($photo)) {
-            if (move_uploaded_file($photo["pname_tmp"], WWW_ROOT."/img/uploaded_photos/".$photo["pname"])) {
-                $imgObj = new resize(WWW_ROOT."/img/uploaded_photos/".$photo["pname"]);
+            if (move_uploaded_file($photo["pname_tmp"], WWW_ROOT."uploaded_photos/".$photo["pname"])) {
+                $imgObj = new resize(WWW_ROOT."uploaded_photos/".$photo["pname"]);
                 $imgObj->customResizeImage(200);
-                $imgObj->saveImage(WWW_ROOT."/img/uploaded_photos/thumbnail/thumbnail_".$photo["pname"], 100);
+                $imgObj->saveImage(WWW_ROOT."uploaded_photos/thumbnail/thumbnail_".$photo["pname"], 100);
                 return true;
             } else return false;
         } else return false;
     }
-
+    
     public function get_top_photo ($photo_amount)
     {
         $sql = "SELECT *,(SELECT COUNT(id) FROM likes l WHERE l.pid=p.id) AS likecount,(SELECT COUNT(id) FROM comments c WHERE c.pid=p.id) AS commentcount,

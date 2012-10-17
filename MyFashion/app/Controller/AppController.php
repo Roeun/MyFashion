@@ -48,7 +48,7 @@ class AppController extends Controller {
     
     public function beforeFilter(){
         if(!$this->Session->check('User')){
-            $this->layout = 'default';
+            $this->lyout = 'default';
         }else{
             $this->layout = 'myDefault';
         }

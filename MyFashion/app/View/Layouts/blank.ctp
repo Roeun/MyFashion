@@ -12,11 +12,19 @@
 		
                 echo $this->Html->css('cake.generic');
                 echo $this->Html->css('bootstrap');                
-
+                
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+        <script type="text/javascript">
+            function closeME() {
+                event.preventDefault();
+                parent.$.fancybox.close();
+                $('#UserLoginForm').submit();
+            }
+            
+        </script>
 </head>
 <body>
 	<div id="container">
@@ -35,6 +43,6 @@
 			
 		</div>
 	</div>
-	<?php //echo $this->element('sql_dump'); ?>
+    	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <?php
 class User extends AppModel {
-    public $name = 'User';
-    public $primaryKey = 'id';
+        public $name = 'User';
+        public $primaryKey = 'id';
 
-    public $validate = array(
+      public $validate = array(
         'uname' => array(
             'required' => array(
             'rule' => 'notEmpty',
@@ -38,22 +38,7 @@ class User extends AppModel {
               'message' => 'Password must be at least 6 characters.'
             )
          )
-    );
-    
-    public $hasMany = array(
-        'Photo'=>array(
-            'className'=>"Photo",
-            'foreignKey'=>'uid'
-        ),
-        'Comment'=>array(
-            'className'=>'Comment',
-            'foreignKey'=>'uid'
-        ),
-        'Like'=>array(
-            'className'=>'Like',
-            'foreignKey'=>'pid'
-        )
-    );
+        );
 }
 
 ?>

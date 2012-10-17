@@ -20,14 +20,10 @@ class Comment extends AppModel {
         )
     );
 
-    public $belongsTo = array(
+    public $belongTo = array(
         'Photo'=>array(
             'className'=>'Photo',
             'foreignKey'=>'pid'
-        ),
-        'User'=>array(
-            'className'=>'User',
-            'foreignKey'=>'uid'
         )
     );
 

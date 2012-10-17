@@ -43,17 +43,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 				'transitionOut'		: 'none',
 				'type'				: 'iframe'
 			});
-                        $("#iframe_login").fancybox({
-				'width'				: '55%',
-				'height'			: '65%',
-				'autoScale'			: false,
-				'transitionIn'		: 'none',
-				'transitionOut'		: 'none',
-				'type'				: 'iframe'
-			});
-                        
 		});
-	
+                
     </script>
 </head>
 <body>
@@ -66,7 +57,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                             </div>
                             <div id="top_right">
                                 <?php 
-                                    echo $this->Html->link('Login',array('controller' => 'users', 'action' => 'login')); 
+                                    echo $this->Html->link('Login',array('controller' => 'users', 'action' => 'login'), array('id'=>'iframe_login')); 
                                     echo " | "; 
                                     echo $this->Html->link('Register',array('controller' => 'users', 'action' => 'register'), array('id'=>'iframe_register'));
                                  ?>

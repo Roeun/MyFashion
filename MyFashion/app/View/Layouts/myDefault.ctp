@@ -16,10 +16,50 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                 echo $this->Html->css('cake.generic_1');
                 echo $this->Html->css('style');
                 
+                echo $this->Html->css('jquery-ui-1.8.4.custom');
+                echo $this->Html->css('jquery.fancybox-1.3.4');
+                
+                echo $this->Html->script('jquery-1.4.2.min.js');
+                echo $this->Html->script('jquery.fancybox-1.3.4.pack.js');
+                echo $this->Html->script('jquery.cookie.js');
+                echo $this->Html->script('jquery.pjax.js');
+
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+        <script type="text/javascript">
+    		    $(function(){
+    		      $('a#pjax').pjax('#content')
+    		    });
+                    $(document).ready(function() {
+			
+			$("#popup").fancybox({
+				'titlePosition'		: 'outside',
+				'overlayColor'		: '#000',
+				'overlayOpacity'	: 0.9
+			});
+
+			
+			$("#iframe").fancybox({
+				'width'				: '55%',
+				'height'			: '98%',
+				'autoScale'			: false,
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'type'				: 'iframe'
+			});
+                        
+                        $("#capture").fancybox({
+				'width'				: '55%',
+				'height'			: '50%',
+				'autoScale'			: false,
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'type'				: 'iframe'
+			});
+		});
+        </script>
 </head>
 <body>
     <center>
@@ -35,13 +75,12 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                 <tr>
                   <td valign="top">
                       <ul class="menu">
-
-			  <li><?php echo $this->Html->link('Where is your Fashion?',array('controller' => 'photos', 'action' => 'upload'), array('id'=>'pjax'));?></li>
-			  <li><?php echo $this->Html->link('My Fashion',array('controller' => 'photos', 'action' => 'my_fashion'), array('id'=>'pjax'));?></li>
-                          <li><?php echo $this->Html->link('Lastest Photo',array('controller' => 'photos', 'action' => 'lastest_photo', 20), array('id'=>'pjax'));?></li>
-                          <li><?php echo $this->Html->link('Top Photo',array('controller' => 'photos', 'action' => 'top_photo', 20), array('id'=>'pjax'));?></li>
+                          <li><?php echo $this->Html->link('My Fashion',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
+                          <li><?php echo $this->Html->link('Lastest Photo',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
+                          <li><?php echo $this->Html->link('Top 10 Photo',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
                           <li><?php echo $this->Html->link('Profile Photo',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
                           <li><?php echo $this->Html->link('My Profile',array('controller' => 'users', 'action' => 'my_profile'), array('id'=>'pjax'));?></li>
+                          <li><?php echo $this->Html->link('Logout',array('controller' => 'users', 'action' => 'logout'));?></li>
                       </ul>
                   </td>
                 </tr>
@@ -56,7 +95,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding:10px;">
+                  <td style="padding:10px;" id="content">
                     <?php echo $this->Session->flash(); ?>
                     <?php echo $this->fetch('content'); ?>    
                   </td>
