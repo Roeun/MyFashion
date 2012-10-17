@@ -35,10 +35,13 @@ class UsersController extends AppController {
                 ); 
 
                 if($this->User->save($arr)){
-                    //$this->Session->setFlash('User has been saved.');
-                    $this->redirect(array('action' => 'upload_photo_profile'));
+                    $this->redirect(array('action' => 'register_successful'));
                 }
             }
+        }
+        
+        public function register_successful() {
+            $this->layout = "blank";
         }
         
         /////////////////// Show Detail information about user ///////////////
