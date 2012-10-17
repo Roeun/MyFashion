@@ -40,8 +40,8 @@ foreach ($top_photos as $top_photo) { ?>
             <?php } ?>
             <tr>
                 <td colspan="2">
+                    <img height="150px;" alt="<?php echo "thumbnail_".$top_photo["Photo"]["pname"]; ?>" src="<?php echo '/app/webroot/uploaded_photos/thumbnail/thumbnail_'.$top_photo["Photo"]["pname"]; ?>" />
                     <?php
-                        echo $this->Html->image(WWW_ROOT.'/img/uploaded_photos/thumbnail/thumbnail_'.$top_photo["Photo"]["pname"]);
                         echo "<br/>".$top_photo["Photo"]["pdes"];
 //                        if ($myUser['User']['id'] == $top_photo["Photo"]["uid"]) {
 //                            echo "&nbsp;:&nbsp;edit";

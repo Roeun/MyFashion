@@ -36,23 +36,13 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                 <tr>
                   <td valign="top">
                       <ul class="menu">
-<<<<<<< HEAD
-			  <li><?php echo $this->Html->link('Where is your Fashion?',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
-			  <li><?php echo $this->Html->link('My Fashion',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
-                          <li><?php echo $this->Html->link('Lastest Photo',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
-                          <li><?php echo $this->Html->link('Top 10 Photo',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
+
+			  <li><?php echo $this->Html->link('Where is your Fashion?',array('controller' => 'photos', 'action' => 'upload'), array('id'=>'pjax'));?></li>
+			  <li><?php echo $this->Html->link('My Fashion',array('controller' => 'photos', 'action' => 'my_fashion'), array('id'=>'pjax'));?></li>
+                          <li><?php echo $this->Html->link('Lastest Photo',array('controller' => 'photos', 'action' => 'lastest_photo', 20), array('id'=>'pjax'));?></li>
+                          <li><?php echo $this->Html->link('Top Photo',array('controller' => 'photos', 'action' => 'top_photo', 20), array('id'=>'pjax'));?></li>
                           <li><?php echo $this->Html->link('Profile Photo',array('controller' => 'users', 'action' => 'register'), array('id'=>'pjax'));?></li>
                           <li><?php echo $this->Html->link('My Profile',array('controller' => 'users', 'action' => 'my_profile'), array('id'=>'pjax'));?></li>
-=======
-                          <li><?php echo $this->Html->link('Where is your Fashion?',array('controller' => 'photos', 'action' => 'upload'));?></li>
-                          <li><?php echo $this->Html->link('My Fashion',array('controller' => 'photos', 'action' => 'my_fashion'));?></li>
-                          <li><?php echo $this->Html->link('Lastest Photo',array('controller' => 'photos', 'action' => 'lastest_photo/20'));?></li>
-                          <li><?php echo $this->Html->link('Top Photo',array('controller' => 'photos', 'action' => 'top_photo', 20));?></li>
-                          <li><?php echo $this->Html->link('Profile Photo',array('controller' => 'users', 'action' => 'register'));?></li>
-                          <li><?php echo $this->Html->link('My Profile',array('controller' => 'users', 'action' => 'my_profile'));?></li>
->>>>>>> Update link of menu and mvc of photo
-                          <li><?php echo $this->Html->link('Logout',array('controller' => 'users', 'action' => 'logout'));?></li>
-			
                       </ul>
                   </td>
                 </tr>

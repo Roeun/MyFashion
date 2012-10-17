@@ -52,8 +52,8 @@
             <?php } ?>
             <tr>
                 <td colspan="2">
+                    <img height="150px;" alt="<?php echo "thumbnail_".$photo["Photo"]["pname"]; ?>" src="<?php echo '/app/webroot/uploaded_photos/thumbnail/thumbnail_'.$photo["Photo"]["pname"]; ?>" />
                     <?php
-                        echo $this->Html->image(WWW_ROOT.'/img/uploaded_photos/thumbnail/thumbnail_'.$photo["Photo"]["pname"]);
                         echo "<br/>".$photo["Photo"]["pdes"];
 //                        if ($myUser['User']['id'] == $photo["Photo"]["uid"]) {
 //                            echo "&nbsp;:&nbsp;edit";
