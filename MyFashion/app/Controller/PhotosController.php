@@ -1,26 +1,19 @@
-<?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of PhotosController
- *
- * @author apple
- */
-include 'resize_class.php';
+<?php include 'resize_class.php';
 class PhotosController extends AppController {
     public $helpers = array('Form','Html');
-    public $uses = array('Photo','Comment', 'Like');
+    public $uses = array('Photo','Comment', 'Like', 'Security', 'User', 'AppModel');
+    
+    public function beforeFilter() {
+        parent::beforeFilter();
+        AppController::myCheckSession();
+    }
 
     public function index ($pid = null, $act = null) {
         $myUser = $this->Session->read('User');
         if (!empty($this->data)) {
             $cmt["uid"] = $myUser['User']['id'];
             $cmt["pid"] = $this->data["Photo"]["pid"];
-            $cmt["cmt"] = $this->data["Photo"]["cmt"];
+            $cmt["cmt"] = $this->Security->sql_injection_input($this->data["Photo"]["cmt"]);
             $cmt["cmtdate"] = date('Y-m-d H:i:s');
 
             if ($this->Comment->insert_comment($cmt)) {
@@ -29,11 +22,11 @@ class PhotosController extends AppController {
                 $this->Session->setFlash("Unable to post comment.");
             }
         }
-        $photos = $this->Photo->find('all', array("conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$myUser['User']['id']." OR Photo.isenable=1)"), 'order'=>array("Photo.postdate DESC")));
+        $photos = $this->Photo->find('all', array("conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$myUser['User']['id']." OR Photo.isenable=1)"), 'order'=>array('Photo.postdate DESC')));
         $this->set('photos', $photos);
     }
 
-    public function like_photo ($pid) {
+    public function like_photo ($pid, $con, $act, $p=null) {
         $myUser = $this->Session->read('User');
         $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$myUser['User']['id'], 'Like.pid'=>$pid)));
         if (count($old_like) > 0) {
@@ -44,10 +37,10 @@ class PhotosController extends AppController {
         $like["pid"] = $pid;
         $like["likedate"] = date('Y-m-d H:i:s');
         $this->Like->save($like);
-        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
     
-    public function unlike_photo ($pid) {
+    public function unlike_photo ($pid, $con, $act, $p=null) {
         $myUser = $this->Session->read('User');
         $old_like = $this->Like->find('all', array('conditions'=>array('Like.uid'=>$myUser['User']['id'], 'Like.pid'=>$pid)));
         $like["id"] = $old_like[0]["Like"]["id"];
@@ -55,15 +48,15 @@ class PhotosController extends AppController {
         $like["pid"] = $pid;
         $like["status"] = 0;
         $this->Like->Save($like);
-        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
 
     public function upload () {
         if (!empty($this->data)) {
             $myUser = $this->Session->read('User');
-            $photo["pname"] = $this->data["Photo"]["pname"]["name"];
+            $photo["pname"] = $this->Security->sql_injection_input($this->data["Photo"]["pname"]["name"]);
             $photo["pname_tmp"] = $this->data["Photo"]["pname"]["tmp_name"];
-            $photo["pdes"] = $this->data["Photo"]["pdes"];
+            $photo["pdes"] = $this->Security->sql_injection_input($this->data["Photo"]["pdes"]);
             $photo["postdate"] = date("Y-m-d H:i:s");
             $photo["uid"] = $myUser['User']['id'];
             $photo["isenable"] = 1;
@@ -76,36 +69,32 @@ class PhotosController extends AppController {
         }
     }
     
-    public function enable_photo ($pid) {
+    public function enable_photo ($pid, $con, $act, $p=null) {
         $photo["id"] = $pid;
         $photo["isenable"] = 1;
         $this->Photo->save($photo);
-        $this->redirect("index/");
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
 
-    public function disable_photo ($pid) {
+    public function disable_photo ($pid, $con, $act, $p=null) {
         $photo["id"] = $pid;
         $photo["isenable"] = 0;
         $this->Photo->save($photo);
-        $this->redirect("index/");
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
 
-    public function delete_photo ($pid) {
+    public function delete_photo ($pid, $con, $act, $p=null) {
         $photo["id"] = $pid;
         $photo["isdelete"] = 1;
         $photo["isenable"] = 0;
         $this->Photo->save($photo);
-        $this->redirect("index/");
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
 
     public function update_description ($pid, $pdes) {
         $photo["id"] = $pid;
         $photo["pdes"] = $pdes;
         $this->Photo->save($photo);
-    }
-
-    public function resize_photo ($photo) {
-        
     }
 
     public function top_photo ($top_photo_amount) {
@@ -119,14 +108,11 @@ class PhotosController extends AppController {
         $lastest_photos = $this->Photo->find('all', array('limit'=>$photo_amount, 'order'=>array('Photo.postdate DESC, Photo.id DESC')));
         $this->set("lastest_photos", $lastest_photos);
     }
-
-    public function capture_photo () {
-        
-    }
-
-    public function photo_list () {
-        $photos = $this->Photo->find('all', array('order'=>array('Photo.postdate DESC, Photo.id DESC')));
-        $this->set("photos", $photos);
+    
+    public function my_fashion () {
+        $myUser = $this->Session->read('User');
+        $my_fashions = $this->Photo->find('all', array('conditions'=>array('Photo.isdelete=0 AND Photo.uid='.$myUser['User']['id']), 'order'=>array('Photo.postdate DESC')));
+        $this->set('my_fashions', $my_fashions);
     }
 }
 

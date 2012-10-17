@@ -12,29 +12,29 @@
  */
 class CommentsController extends AppController {
     public $helpers = array('Form','Html');
-    
+
     public function index () {}
     
-    public function delete_comment ($cmt_id) {
+    public function delete_comment ($cmt_id, $con, $act, $p=null) {
         $cmt["id"] = $cmt_id;
         $cmt["isdelete"] = 1;
         $cmt["isenable"] = 0;
         $this->Comment->save($cmt);
-        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
     
-    public function disable_comment ($cmt_id) {
+    public function disable_comment ($cmt_id, $con, $act, $p=null) {
         $cmt["id"] = $cmt_id;
         $cmt["isenable"] = 0;
         $this->Comment->save($cmt);
-        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
     
-    public function enable_comment ($cmt_id) {
+    public function enable_comment ($cmt_id, $con, $act, $p=null) {
         $cmt["id"] = $cmt_id;
         $cmt["isenable"] = 1;
         $this->Comment->save($cmt);
-        $this->redirect(array("controller"=>"photos", "action"=>"index"));
+        $this->redirect(array("controller"=>$con, "action"=>$act, $p));
     }
 }
 

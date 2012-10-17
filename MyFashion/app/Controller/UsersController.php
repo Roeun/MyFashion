@@ -10,8 +10,7 @@ App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
         public $helpers = array('Html','Form');
-        
-        
+
         /////////////////// function used to create an account for use website ///////
         public function register(){
             $title_for_layout = 'Create an Account';

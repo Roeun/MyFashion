@@ -1,8 +1,7 @@
-Lastest photo
 <?php
     $myUser = $this->Session->read('User');
     foreach ($lastest_photos as $lastest_photo) { ?>
-        <div style="border:1px;">
+        <div style="border:1px blue solid;margin-bottom:10px;padding:10px;">
             <table>
                 <?php if ($lastest_photo["Photo"]["isdelete"]==0 && ($lastest_photo["Photo"]["isenable"]==1 || $lastest_photo["Photo"]["uid"]==$myUser['User']['id'])) { ?>
                     <tr>
@@ -25,15 +24,15 @@ Lastest photo
                                         $like_uid[] = $like["uid"];
                                     }
                                 }
-                                if (in_array($myUser['User']['id'], $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $lastest_photo["Photo"]["id"]))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
-                                else echo $this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $lastest_photo["Photo"]["id"]))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
+                                if (in_array($myUser['User']['id'], $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
+                                else echo $this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
 
                                 if ($lastest_photo["Photo"]["isdelete"]==0 && $myUser['User']['id']==$lastest_photo["Photo"]["uid"]) {
-                                    echo "<br/>".$this->Html->link("Delete this Photo", array("controller"=>"photos", "action"=>"delete_photo", $lastest_photo["Photo"]["id"]))."&nbsp;&nbsp;:&nbsp;&nbsp;";
+                                    echo "<br/>".$this->Html->link("Delete this Photo", array("controller"=>"photos", "action"=>"delete_photo", $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;&nbsp;:&nbsp;&nbsp;";
                                     if ($lastest_photo["Photo"]["isenable"]==0) {
-                                        echo $this->Html->link("Enable this Photo", array("controller"=>"photos", "action"=>"enable_photo", $lastest_photo["Photo"]["id"]));
+                                        echo $this->Html->link("Enable this Photo", array("controller"=>"photos", "action"=>"enable_photo", $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"));
                                     } else {
-                                        echo $this->Html->link("Disable this Photo", array("controller"=>"photos", "action"=>"disable_photo", $lastest_photo["Photo"]["id"]));
+                                        echo $this->Html->link("Disable this Photo", array("controller"=>"photos", "action"=>"disable_photo", $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"));
                                     }
                                 }
                             ?>
@@ -45,9 +44,9 @@ Lastest photo
                         <img height="150px;" alt="<?php echo "thumbnail_".$lastest_photo["Photo"]["pname"]; ?>" src="<?php echo '/app/webroot/uploaded_photos/thumbnail/thumbnail_'.$lastest_photo["Photo"]["pname"]; ?>" />
                         <?php
                             echo "<br/>".$lastest_photo["Photo"]["pdes"];
-                            if ($myUser['User']['id'] == $lastest_photo["Photo"]["uid"]) {
-                                echo "&nbsp;:&nbsp;edit";
-                            }
+//                            if ($myUser['User']['id'] == $lastest_photo["Photo"]["uid"]) {
+//                                echo "&nbsp;:&nbsp;edit";
+//                            }
                         ?>
                     </td>
                 </tr>
@@ -62,11 +61,11 @@ Lastest photo
                         <td>
                             <?php
                                 if ($comment["isdelete"]==0 && $myUser['User']['id']==$comment["uid"]) {
-                                    echo "<br/>".$this->Html->link("X", array("controller"=>"comments", "action"=>"delete_comment", $comment["id"]))."&nbsp;&nbsp;:&nbsp;&nbsp;";
+                                    echo "<br/>".$this->Html->link("X", array("controller"=>"comments", "action"=>"delete_comment", $comment["id"], "photos", "lastest_photo", "20"))."&nbsp;&nbsp;:&nbsp;&nbsp;";
                                     if ($comment["isenable"]==0) {
-                                        echo $this->Html->link("Enable this Comment", array("controller"=>"comments", "action"=>"enable_comment", $comment["id"]));
+                                        echo $this->Html->link("Enable this Comment", array("controller"=>"comments", "action"=>"enable_comment", $comment["id"], "photos", "lastest_photo", "20"));
                                     } else {
-                                        echo $this->Html->link("Disable this Comment", array("controller"=>"comments", "action"=>"disable_comment", $comment["id"]));
+                                        echo $this->Html->link("Disable this Comment", array("controller"=>"comments", "action"=>"disable_comment", $comment["id"], "photos", "lastest_photo", "20"));
                                     }
                                 } echo "&nbsp;".$comment["cmt"];
                             ?>
