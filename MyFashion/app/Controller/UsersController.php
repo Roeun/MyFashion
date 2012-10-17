@@ -15,7 +15,8 @@ class UsersController extends AppController {
         /////////////////// function used to create an account for use website ///////
         public function register(){
             $title_for_layout = 'Create an Account';
-            $this->set(compact('title_for_layout'));       
+            $this->set(compact('title_for_layout'));   
+            $this->layout = "blank"; 
             // if the form was submitted
             if(!empty($this->data)) {     
                 $my_date = date('Y-m-d');
@@ -57,8 +58,7 @@ class UsersController extends AppController {
                 $this->redirect(array('controller' => 'pages', 'action' => 'display'));
               }
             $title_for_layout = 'Welcome to MyFashion';
-                    $this->set(compact('title_for_layout'));
-                    $this->layout = "blank";  
+                    $this->set(compact('title_for_layout')); 
                     // if the form was submitted
                     if(!empty($this->data)) {
                                // find the user in the database
