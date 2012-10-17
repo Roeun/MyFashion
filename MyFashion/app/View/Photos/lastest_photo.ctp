@@ -15,7 +15,7 @@
                                         $comment_id[] = $comment["id"];
                                     }
                                 }
-                                echo $lastest_photo["Photo"]["postdate"]."&nbsp;[";
+                                echo "Photo posted by: ".$lastest_photo["User"]["uname"]." at ".$lastest_photo["Photo"]["postdate"];
                                 $like_uid = array();
                                 $count_like = 0;
                                 foreach ($lastest_photo["Like"] as $like) {
@@ -24,8 +24,8 @@
                                         $like_uid[] = $like["uid"];
                                     }
                                 }
-                                if (in_array($myUser['User']['id'], $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
-                                else echo $this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
+                                if (in_array($myUser['User']['id'], $like_uid)) echo "<br/>[ ".$this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;:&nbsp;".$count_like." - Comments : ".$comment_count." ]";
+                                else echo "<br/>[ ".$this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;:&nbsp;".$count_like." - Comments : ".$comment_count." ]";
 
                                 if ($lastest_photo["Photo"]["isdelete"]==0 && $myUser['User']['id']==$lastest_photo["Photo"]["uid"]) {
                                     echo "<br/>".$this->Html->link("Delete this Photo", array("controller"=>"photos", "action"=>"delete_photo", $lastest_photo["Photo"]["id"], "photos", "lastest_photo", "20"))."&nbsp;&nbsp;:&nbsp;&nbsp;";
@@ -42,12 +42,7 @@
                 <tr>
                     <td colspan="2">
                         <img height="150px;" alt="<?php echo "thumbnail_".$lastest_photo["Photo"]["pname"]; ?>" src="<?php echo '/app/webroot/uploaded_photos/thumbnail/thumbnail_'.$lastest_photo["Photo"]["pname"]; ?>" />
-                        <?php
-                            echo "<br/>".$lastest_photo["Photo"]["pdes"];
-//                            if ($myUser['User']['id'] == $lastest_photo["Photo"]["uid"]) {
-//                                echo "&nbsp;:&nbsp;edit";
-//                            }
-                        ?>
+                        <?php echo "<br/>".$lastest_photo["Photo"]["pdes"]; ?>
                     </td>
                 </tr>
                 <?php foreach ($lastest_photo["Comment"] as $comment) {
@@ -75,7 +70,8 @@
                 <?php } ?>
             </table>
             <?php
-                echo $this->Form->create();
+                echo $this->Form->create("Photo", array("controller"=>"photos", "action"=>"insert_comment"));
+                echo $this->Form->input('redirect', array('type'=>'hidden', 'value'=>'/photos/lastest_photo/20'));
                 echo $this->Form->input('pid', array('type'=>'hidden', 'value'=>$lastest_photo["Photo"]["id"]));
                 echo $this->Form->input('cmt', array('label'=>'Comment: '));
                 echo $this->Form->end("Post");

@@ -2,7 +2,7 @@
 class PhotosController extends AppController {
     public $helpers = array('Form','Html');
     public $uses = array('Photo','Comment', 'Like', 'Security', 'User', 'AppModel');
-    
+
     public function beforeFilter() {
         parent::beforeFilter();
         AppController::myCheckSession();
@@ -10,7 +10,13 @@ class PhotosController extends AppController {
 
     public function index ($pid = null, $act = null) {
         $myUser = $this->Session->read('User');
+        $photos = $this->Photo->find('all', array("conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$myUser['User']['id']." OR Photo.isenable=1)"), 'order'=>array('Photo.postdate DESC')));
+        $this->set('photos', $photos);
+    }
+    
+    public function insert_comment () {
         if (!empty($this->data)) {
+            $myUser = $this->Session->read('User');
             $cmt["uid"] = $myUser['User']['id'];
             $cmt["pid"] = $this->data["Photo"]["pid"];
             $cmt["cmt"] = $this->Security->sql_injection_input($this->data["Photo"]["cmt"]);
@@ -21,9 +27,8 @@ class PhotosController extends AppController {
             } else {
                 $this->Session->setFlash("Unable to post comment.");
             }
+            $this->redirect($this->data["Photo"]["redirect"]);
         }
-        $photos = $this->Photo->find('all', array("conditions"=>array("Photo.isdelete=0 AND (Photo.uid=".$myUser['User']['id']." OR Photo.isenable=1)"), 'order'=>array('Photo.postdate DESC')));
-        $this->set('photos', $photos);
     }
 
     public function like_photo ($pid, $con, $act, $p=null) {

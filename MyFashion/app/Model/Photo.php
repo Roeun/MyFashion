@@ -11,9 +11,10 @@
  * @author apple
  */
 class Photo extends AppModel {
-    public $belongTo = array(
-        "User"=>array(
-            'className'=>"User",
+
+    public $belongsTo = array(
+        'User'=>array(
+            'className'=>'User',
             'foreignKey'=>'uid'
         )
     );
@@ -28,7 +29,7 @@ class Photo extends AppModel {
             'foreignKey'=>'pid'
         )
     );
-    
+
     public function upload_photo_fashion ($photo) {
         if ($this->save($photo)) {
             if (move_uploaded_file($photo["pname_tmp"], WWW_ROOT."/img/uploaded_photos/".$photo["pname"])) {

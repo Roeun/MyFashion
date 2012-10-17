@@ -13,7 +13,7 @@ foreach ($my_fashions as $my_fashion) { ?>
                                 $comment_id[] = $comment["id"];
                             }
                         }
-                        echo $my_fashion["Photo"]["postdate"]."&nbsp;[";
+                        echo "Photo posted by: ".$my_fashion["User"]["uname"]." at ".$my_fashion["Photo"]["postdate"];
                         $like_uid = array();
                         $count_like = 0;
                         foreach ($my_fashion["Like"] as $like) {
@@ -22,8 +22,8 @@ foreach ($my_fashions as $my_fashion) { ?>
                                 $like_uid[] = $like["uid"];
                             }
                         }
-                        if (in_array($myUser['User']['id'], $like_uid)) echo $this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $my_fashion["Photo"]["id"], "photos", "my_fashion"))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
-                        else echo $this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $my_fashion["Photo"]["id"], "photos", "my_fashion"))."&nbsp;:&nbsp;".$count_like.", Comments : ".$comment_count."]";
+                        if (in_array($myUser['User']['id'], $like_uid)) echo "<br/>[ ".$this->Html->link('Unlike', array('controller'=>'Photos', 'action'=>'unlike_photo', $my_fashion["Photo"]["id"], "photos", "my_fashion"))."&nbsp;:&nbsp;".$count_like." - Comments : ".$comment_count." ]";
+                        else echo "<br/>[ ".$this->Html->link('Like', array('controller'=>'Photos', 'action'=>'like_photo', $my_fashion["Photo"]["id"], "photos", "my_fashion"))."&nbsp;:&nbsp;".$count_like." - Comments : ".$comment_count." ]";
 
                         echo "<br/>".$this->Html->link("Delete this Photo", array("controller"=>"photos", "action"=>"delete_photo", $my_fashion["Photo"]["id"], "photos", "my_fashion"))."&nbsp;&nbsp;:&nbsp;&nbsp;";
                         if ($my_fashion["Photo"]["isenable"]==0) {
@@ -36,7 +36,8 @@ foreach ($my_fashions as $my_fashion) { ?>
             </tr>
             <tr>
                 <td colspan="2">
-                    <?php echo $this->Html->image(WWW_ROOT.'/img/uploaded_photos/thumbnail/thumbnail_'.$my_fashion["Photo"]["pname"]); ?>
+                    <img height="150px;" alt="<?php echo "thumbnail_".$my_fashion["Photo"]["pname"]; ?>" src="<?php echo '/app/webroot/uploaded_photos/thumbnail/thumbnail_'.$my_fashion["Photo"]["pname"]; ?>" />
+                    <?php echo "<br/>".$my_fashion["Photo"]["pdes"]; ?>
                 </td>
             </tr>
             <?php foreach ($my_fashion["Comment"] as $comment) {
@@ -64,7 +65,8 @@ foreach ($my_fashions as $my_fashion) { ?>
             <?php } ?>
         </table>
         <?php
-            echo $this->Form->create();
+            echo $this->Form->create("Photo", array("controller"=>"photos", "action"=>"insert_comment"));
+            echo $this->Form->input('redirect', array('type'=>'hidden', 'value'=>'/photos/my_fashion'));
             echo $this->Form->input('pid', array('type'=>'hidden', 'value'=>$my_fashion["Photo"]["id"]));
             echo $this->Form->input('cmt', array('label'=>'Comment: '));
             echo $this->Form->end("Post");
