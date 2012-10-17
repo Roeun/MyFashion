@@ -44,15 +44,15 @@ class User extends AppModel {
         'Photo'=>array(
             'className'=>"Photo",
             'foreignKey'=>'uid'
+        ),
+        'Comment'=>array(
+            'className'=>'Comment',
+            'foreignKey'=>'uid'
+        ),
+        'Like'=>array(
+            'className'=>'Like',
+            'foreignKey'=>'pid'
         )
-//        'Comment'=>array(
-//            'className'=>'Comment',
-//            'foreignKey'=>'uid'
-//        ),
-//        'Like'=>array(
-//            'className'=>'Like',
-//            'foreignKey'=>'pid'
-//        )
     );
 }
 
