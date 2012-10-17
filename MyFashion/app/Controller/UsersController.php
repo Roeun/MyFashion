@@ -15,8 +15,7 @@ class UsersController extends AppController {
         /////////////////// function used to create an account for use website ///////
         public function register(){
             $title_for_layout = 'Create an Account';
-            $this->set(compact('title_for_layout'));
-            $this->layout = "blank";        
+            $this->set(compact('title_for_layout'));       
             // if the form was submitted
             if(!empty($this->data)) {     
                 $my_date = date('Y-m-d');
